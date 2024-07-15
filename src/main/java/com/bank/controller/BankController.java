@@ -12,10 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Controller
+@RequestMapping
+
 public class BankController {
 
     @Autowired
@@ -29,7 +33,7 @@ public class BankController {
     @Autowired
     private ServiceRepository serviceRepository;
 
-    @GetMapping("/bank/{id}/branches")
+    @GetMapping("/api/v1/bank/{id}/branches")
     public String getBankBranches(@PathVariable Long id, Model model) {
         Bank bank = bankRepository.findById(id).orElse(null);
         List<Branch> branches = branchRepository.findByCity("Bangalore");
@@ -38,7 +42,7 @@ public class BankController {
         return "bank-branches";
     }
 
-    @GetMapping("/bank/{id}/services")
+    @GetMapping("/api/v1/bank/{id}/services")
     public String getBankServices(@PathVariable("id") Long bankId, Model model) {
         Bank bank = bankService.getBankById(bankId);
         List<Service> services = bankService.getServicesByBankId(bankId);
